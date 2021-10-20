@@ -13,7 +13,7 @@ public class AuthController implements AuthApi {
     @Override
     public ResponseEntity<AuthenticationResponse> login(LoginRequest loginRequest) {
         AuthenticationResponse response = new AuthenticationResponse();
-        response.setEmail("test");
+        response.setEmail(loginRequest.getEmail());
         return ResponseEntity.ok(response);
     }
 }
