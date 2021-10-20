@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+    description: "Swagger API rest service"
+    version: "1.0.0"
+    title: "Swagger backend"
+paths:
+
+    /auth/login:
+        post:
+            tags:
+                - "auth"
+            summary: "Login with credentials"
+            description: "Login with credentials"
+            operationId: "login"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/loginRequest'
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/authenticationResponse'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
+components:
+    schemas:
+
+        loginRequest:
+            type: object
+            properties:
+                email:
+                    type: string
+                    minLength: 5
+                    maxLength: 200
+                    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+                password:
+                    type: string
+                    minLength: 5
+                    maxLength: 200
+            required:
+                - email
+                - password
+
+        authenticationResponse:
+            type: object
+            properties:
+                authToken:
+                    type: string
+                email:
+                    type: string
