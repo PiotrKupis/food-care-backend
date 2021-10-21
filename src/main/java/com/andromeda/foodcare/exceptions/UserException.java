@@ -1,12 +1,16 @@
 package com.andromeda.foodcare.exceptions;
 
-public class UserException extends RuntimeException {
+import com.andromeda.foodcare.exceptions.core.BaseException;
+import com.andromeda.foodcare.exceptions.core.NotFoundException;
 
-    public UserException(String message) {
-        super(message);
+public class UserException extends BaseException {
+
+    public UserException(BaseException exception) {
+        super(exception);
     }
 
     public static UserException userNotFound(String email) {
-        return new UserException("User with email: " + email + " not found");
+        return new UserException(
+            NotFoundException.notFound("User with email: " + email + " not found"));
     }
 }
