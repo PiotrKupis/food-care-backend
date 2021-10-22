@@ -19,7 +19,7 @@ paths:
                         schema:
                             $ref: '#/components/schemas/loginRequest'
             responses:
-                '200':
+                '201':
                     description: 'Operation successful'
                     content:
                         application/json:
@@ -88,27 +88,32 @@ components:
                 role:
                     type: string
 
+
         registerRequest:
             type: object
             properties:
                 name:
                     type: string
-                    minLength: 1
-                    maxLength: 50
+                    minLength: 3
+                    maxLength: 20
                 email:
                     type: string
                     minLength: 5
                     maxLength: 200
                     pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+                password:
+                    type: string
+                    minLength: 5
+                    maxLength: 200
                 phoneNumber:
                     type: string
                     minLength: 6
                     maxLength: 12
                     pattern: '^\d{6,12}$'
-                password:
-                    type: string
-                    minLength: 5
-                    maxLength: 30
+            required:
+                - email
+                - password
+                - phoneNumber
 
         userPayload:
             type: object
@@ -118,6 +123,40 @@ components:
                 email:
                     type: string
                 role:
-                    type: string
+                    type: object
                 phoneNumber:
                     type: string
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

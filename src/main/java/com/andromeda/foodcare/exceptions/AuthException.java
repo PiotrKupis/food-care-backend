@@ -17,4 +17,8 @@ public class AuthException extends BaseException {
     public static AuthException badCredentials() {
         return new AuthException(OperationException.operationError("Bad credentials"));
     }
+
+    public static AuthException emailAlreadyTaken(String email) {
+        return new AuthException(OperationException.operationError("Email: " + email + " already in use!" ));
+    }
 }

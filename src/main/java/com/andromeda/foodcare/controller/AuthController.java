@@ -24,6 +24,6 @@ public class AuthController implements AuthApi {
 
     @Override
     public ResponseEntity<UserPayload> register(RegisterRequest registerRequest) {
-        return AuthApi.super.register(registerRequest);
+        return ResponseEntity.ok(authService.register(registerRequest));
     }
 }

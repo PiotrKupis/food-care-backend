@@ -57,4 +57,13 @@ public class User {
     @Size(min = 6, max = 12)
     @Column(nullable = false, name = "phone_number", length = 12)
     private String phoneNumber;
+
+    //TODO: powinienen użyć AllArgsConstructor ale nie działa bo wymaga podania ID
+    public User(String name, UserRole role, String password, String email, String phoneNumber) {
+        this.name = name;
+        this.role = role;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
 }

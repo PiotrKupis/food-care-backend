@@ -13,4 +13,6 @@ public class UserException extends BaseException {
         return new UserException(
             NotFoundException.notFound("User with email: " + email + " not found"));
     }
+
+
 }
