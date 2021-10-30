@@ -6,6 +6,7 @@ import com.andromeda.dto.RegisterRequest;
 import com.andromeda.dto.UserPayload;
 import com.andromeda.foodcare.enums.UserRole;
 import com.andromeda.foodcare.exceptions.AuthException;
+import com.andromeda.foodcare.exceptions.UserException;
 import com.andromeda.foodcare.model.User;
 import com.andromeda.foodcare.repository.UserRepository;
 import com.andromeda.foodcare.security.JwtProvider;
@@ -41,14 +42,14 @@ public class AuthService {
     public AuthenticationResponse login(LoginRequest loginRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
-                            loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                    loginRequest.getPassword()));
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtProvider.generateToken(loginRequest.getEmail());
             UserRole role = userRepository.findByEmail(loginRequest.getEmail())
-                    .map(User::getRole)
-                    .orElseThrow(AuthException::badCredentials);
+                .map(User::getRole)
+                .orElseThrow(AuthException::badCredentials);
 
             AuthenticationResponse authenticationResponse = new AuthenticationResponse();
             authenticationResponse.setAuthToken(token);
@@ -66,11 +67,11 @@ public class AuthService {
             throw AuthException.emailAlreadyTaken(registerRequest.getEmail());
         } else {
             User newUser = new User(
-                    registerRequest.getName(),
-                    UserRole.USER,
-                    encoder.encode(registerRequest.getPassword()),
-                    registerRequest.getEmail(),
-                    registerRequest.getPhoneNumber()
+                registerRequest.getName(),
+                UserRole.USER,
+                encoder.encode(registerRequest.getPassword()),
+                registerRequest.getEmail(),
+                registerRequest.getPhoneNumber()
             );
             userRepository.save(newUser);
 
@@ -81,5 +82,13 @@ public class AuthService {
             userPayload.setPhoneNumber(newUser.getPhoneNumber());
             return userPayload;
         }
+    }
+
+    public User getCurrentUser() {
+        var principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
+            .getAuthentication()
+            .getPrincipal();
+        return userRepository.findByEmail(principal.getUsername())
+            .orElseThrow(() -> UserException.userNotFound(principal.getUsername()));
     }
 }
