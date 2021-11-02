@@ -17,4 +17,5 @@ public class BusinessController implements BusinessApi {
     public ResponseEntity<BusinessPayload> addBusiness(BusinessPayload businessPayload) {
         return ResponseEntity.ok(businessService.addBusiness(businessPayload));
     }
+
 }

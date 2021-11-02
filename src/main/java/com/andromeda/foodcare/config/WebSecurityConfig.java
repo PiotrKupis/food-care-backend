@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/auth/register", "/auth/login").permitAll()
-                .antMatchers("/product/add_product").hasAnyAuthority("BUSINESS")
+                .antMatchers("/product/add_product", "/product/get_product").hasAnyAuthority("BUSINESS")
                 .antMatchers(HttpMethod.POST, "/business").hasAnyAuthority("USER", "BUSINESS")
                 .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-docs")
                 .permitAll()

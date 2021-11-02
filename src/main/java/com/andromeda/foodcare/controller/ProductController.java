@@ -18,4 +18,8 @@ public class ProductController implements ProductApi {
         return ResponseEntity.ok(productService.addProduct(productPayload));
     }
 
+    @Override
+    public ResponseEntity<ProductPayload> getProduct(Long id) {
+        return ResponseEntity.ok(productService.getProduct(id));
+    }
 }

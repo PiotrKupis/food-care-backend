@@ -27,4 +27,8 @@ public class ProductService {
         product = productRepository.save(product);
         return productMapper.toProductPayload(product);
     }
+
+    public ProductPayload getProduct(Long id) {
+        return productMapper.toProductPayload(productRepository.getById(id));
+    }
 }
