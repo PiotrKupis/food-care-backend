@@ -1,203 +1,256 @@
 openapi: 3.0.0
 info:
-    description: "Swagger API rest service"
-    version: "1.0.0"
-    title: "Swagger backend"
+  description: "Swagger API rest service"
+  version: "1.0.0"
+  title: "Swagger backend"
 paths:
 
-    /auth/login:
-        post:
-            tags:
-                - "auth"
-            summary: "Login with credentials"
-            description: "Login with credentials"
-            operationId: "login"
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/loginRequest'
-            responses:
-                '201':
-                    description: 'Operation successful'
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/authenticationResponse'
-                '400':
-                    description: "Bad request"
-                '500':
-                    description: "Internal server error"
-                '503':
-                    description: "Database connection failed"
+  /auth/login:
+    post:
+      tags:
+        - "auth"
+      summary: "Login with credentials"
+      description: "Login with credentials"
+      operationId: "login"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginRequest'
+      responses:
+        '201':
+          description: 'Operation successful'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/authenticationResponse'
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+        '503':
+          description: "Database connection failed"
 
-    /auth/register:
-        post:
-            tags:
-                - "auth"
-            summary: "Register a new user"
-            description: "Register a new user"
-            operationId: "register"
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/registerRequest'
-            responses:
-                '201':
-                    description: 'Operation successful'
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/userPayload'
-                '400':
-                    description: "Bad request"
-                '500':
-                    description: "Internal server error"
-                '503':
-                    description: "Database connection failed"
+  /auth/register:
+    post:
+      tags:
+        - "auth"
+      summary: "Register a new user"
+      description: "Register a new user"
+      operationId: "register"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerRequest'
+      responses:
+        '201':
+          description: 'Operation successful'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/userPayload'
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+        '503':
+          description: "Database connection failed"
 
-    /business:
-        post:
-            tags:
-                - "business"
-            summary: "Add a new business"
-            description: "Add a new business"
-            operationId: "addBusiness"
-            requestBody:
-                required: true
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/businessPayload'
-            responses:
-                '201':
-                    description: 'Operation successful'
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/businessPayload'
-                '400':
-                    description: "Bad request"
-                '500':
-                    description: "Internal server error"
-                '503':
-                    description: "Database connection failed"
+  /business:
+    post:
+      tags:
+        - "business"
+      summary: "Add a new business"
+      description: "Add a new business"
+      operationId: "addBusiness"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/businessPayload'
+      responses:
+        '201':
+          description: 'Operation successful'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/businessPayload'
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+        '503':
+          description: "Database connection failed"
 
+  /product/add_product:
+    post:
+      tags:
+        - "product"
+      summary: "Add new product"
+      description: "Add new product"
+      operationId: "addProduct"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/productPayload'
+      responses:
+        '201':
+          description: 'Operation successful'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/productPayload'
+        '400':
+          description: "Bad request"
+        '500':
+          description: "Internal server error"
+        '503':
+          description: "Database connection failed"
 components:
-    schemas:
+  schemas:
 
-        loginRequest:
-            type: object
-            properties:
-                email:
-                    type: string
-                    minLength: 5
-                    maxLength: 200
-                    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
-                password:
-                    type: string
-                    minLength: 5
-                    maxLength: 200
-            required:
-                - email
-                - password
+    loginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          minLength: 5
+          maxLength: 200
+          pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        password:
+          type: string
+          minLength: 5
+          maxLength: 200
+      required:
+        - email
+        - password
 
-        authenticationResponse:
-            type: object
-            properties:
-                authToken:
-                    type: string
-                email:
-                    type: string
-                role:
-                    type: string
+    authenticationResponse:
+      type: object
+      properties:
+        authToken:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
 
-        registerRequest:
-            type: object
-            properties:
-                name:
-                    type: string
-                    minLength: 3
-                    maxLength: 20
-                email:
-                    type: string
-                    minLength: 5
-                    maxLength: 200
-                    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
-                password:
-                    type: string
-                    minLength: 5
-                    maxLength: 200
-                phoneNumber:
-                    type: string
-                    minLength: 6
-                    maxLength: 12
-                    pattern: '^\d{6,12}$'
-            required:
-                - email
-                - password
-                - phoneNumber
+    registerRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 20
+        email:
+          type: string
+          minLength: 5
+          maxLength: 200
+          pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        password:
+          type: string
+          minLength: 5
+          maxLength: 200
+        phoneNumber:
+          type: string
+          minLength: 6
+          maxLength: 12
+          pattern: '^\d{6,12}$'
+      required:
+        - email
+        - password
+        - phoneNumber
 
-        userPayload:
-            type: object
-            properties:
-                name:
-                    type: string
-                email:
-                    type: string
-                role:
-                    type: object
-                phoneNumber:
-                    type: string
+    userPayload:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: object
+        phoneNumber:
+          type: string
 
-        businessPayload:
-            type: object
-            properties:
-                name:
-                    type: string
-                    minLength: 3
-                    maxLength: 80
-                country:
-                    type: string
-                    minLength: 4
-                    maxLength: 80
-                city:
-                    type: string
-                    minLength: 3
-                    maxLength: 80
-                zipCode:
-                    type: string
-                    minLength: 3
-                    maxLength: 50
-                    pattern: '^\d+-\d+$'
-                street:
-                    type: string
-                    minLength: 3
-                    maxLength: 80
-                streetNumber:
-                    type: string
-                    minLength: 1
-                    maxLength: 50
-                email:
-                    type: string
-                    minLength: 5
-                    maxLength: 200
-                    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
-                phoneNumber:
-                    type: string
-                    minLength: 6
-                    maxLength: 12
-                businessType:
-                    type: string
-                    enum:
-                        - SHOP
-                        - RESTAURANT
-                openHour:
-                    type: string
-                    pattern: '^\d{2}:\d{2}$'
-                closeHour:
-                    type: string
-                    pattern: '^\d{2}:\d{2}$'
+    businessPayload:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 80
+        country:
+          type: string
+          minLength: 4
+          maxLength: 80
+        city:
+          type: string
+          minLength: 3
+          maxLength: 80
+        zipCode:
+          type: string
+          minLength: 3
+          maxLength: 50
+          pattern: '^\d+-\d+$'
+        street:
+          type: string
+          minLength: 3
+          maxLength: 80
+        streetNumber:
+          type: string
+          minLength: 1
+          maxLength: 50
+        email:
+          type: string
+          minLength: 5
+          maxLength: 200
+          pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+        phoneNumber:
+          type: string
+          minLength: 6
+          maxLength: 12
+        businessType:
+          type: string
+          enum:
+            - SHOP
+            - RESTAURANT
+        openHour:
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+        closeHour:
+          type: string
+          pattern: '^\d{2}:\d{2}$'
+
+    productPayload:
+      type: object
+      properties:
+        ownerId:
+          type: number
+          maxLength: 120
+        name:
+          type: string
+          minLength: 3
+          maxLength: 80
+        regularPrice:
+          type: number
+          format: double
+          maximum: 1000
+        discountedPrice:
+          type: number
+          format: double
+          maximum: 1000
+        expirationDate:
+          type: string
+          pattern: '^\d{4}-\d{2}-\d{2}$'
+          example: "2019-05-17"
+        vegan:
+          type: boolean
+
+

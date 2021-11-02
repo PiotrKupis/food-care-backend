@@ -40,20 +40,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors()
-            .and()
-            .csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/auth/register", "/auth/login").permitAll()
-            .antMatchers(HttpMethod.POST, "/business").hasAnyAuthority("USER", "BUSINESS")
-            .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-docs")
-            .permitAll()
-            .anyRequest().authenticated();
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/auth/register", "/auth/login").permitAll()
+                .antMatchers("/product/add_product").hasAnyAuthority("BUSINESS")
+                .antMatchers(HttpMethod.POST, "/business").hasAnyAuthority("USER", "BUSINESS")
+                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-docs")
+                .permitAll()
+                .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
