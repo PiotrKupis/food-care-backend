@@ -262,6 +262,9 @@ components:
         productPayload:
             type: object
             properties:
+                id:
+                    type: integer
+                    format: int64
                 ownerId:
                     type: number
                     maxLength: 120
