@@ -59,6 +59,27 @@ paths:
                 '503':
                     description: "Database connection failed"
 
+    /user:
+        get:
+            tags:
+                - "user"
+            summary: "Get data about current user"
+            description: "Get data about current user"
+            operationId: "getCurrentUserData"
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/detailedUserPayload'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
     /business:
         post:
             tags:
@@ -121,14 +142,14 @@ paths:
             description: "Get product from databse"
             operationId: "getProduct"
             parameters:
-                - in: path
-                  name: id
-                  required: true
-                  schema:
-                      type: integer
-                      format: int64
-                      minimum: 1
-                  description: The product ID
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: integer
+                        format: int64
+                        minimum: 1
+                    description: The product ID
             responses:
                 '201':
                     description: 'Operation successful'
@@ -194,9 +215,32 @@ components:
                     maxLength: 12
                     pattern: '^\d{6,12}$'
             required:
+                - name
                 - email
                 - password
                 - phoneNumber
+
+        detailedUserPayload:
+            type: object
+            properties:
+                name:
+                    type: string
+                    minLength: 3
+                    maxLength: 20
+                email:
+                    type: string
+                    minLength: 5
+                    maxLength: 200
+                    pattern: '^[^\s@]+@[^\s@]+\.[^\s@]+$'
+                password:
+                    type: string
+                    minLength: 5
+                    maxLength: 200
+                phoneNumber:
+                    type: string
+                    minLength: 6
+                    maxLength: 12
+                    pattern: '^\d{6,12}$'
 
         userPayload:
             type: object
@@ -286,5 +330,3 @@ components:
                     example: "2019-05-17"
                 vegan:
                     type: boolean
-
-
