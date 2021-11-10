@@ -34,7 +34,7 @@ public class AuthService {
     private final PasswordEncoder encoder;
 
     /**
-     * Method responsible for handling login request.
+     * Method responsible for handling login request..
      *
      * @param loginRequest object of type {@link LoginRequest}
      * @return object of type {@link AuthenticationResponse}
