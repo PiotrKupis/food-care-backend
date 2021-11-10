@@ -2,6 +2,7 @@ package com.andromeda.foodcare.controller;
 
 import com.andromeda.controller.UserApi;
 import com.andromeda.dto.DetailedUserPayload;
+import com.andromeda.dto.UpdateUserResponse;
 import com.andromeda.foodcare.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,5 +17,10 @@ public class UserController implements UserApi {
     @Override
     public ResponseEntity<DetailedUserPayload> getCurrentUserData() {
         return ResponseEntity.ok(userService.getCurrentUserData());
+    }
+
+    @Override
+    public ResponseEntity<UpdateUserResponse> updateUser(DetailedUserPayload detailedUserPayload) {
+        return ResponseEntity.ok(userService.updateUser(detailedUserPayload));
     }
 }
