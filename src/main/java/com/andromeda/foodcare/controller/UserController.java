@@ -15,7 +15,7 @@ public class UserController implements UserApi {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<DetailedUserPayload> getCurrentUserData() {
+    public ResponseEntity<DetailedUserPayload> getCurrentUser() {
         return ResponseEntity.ok(userService.getCurrentUserData());
     }
 

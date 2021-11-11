@@ -65,7 +65,7 @@ paths:
                 - "user"
             summary: "Get data about current user"
             description: "Get data about current user"
-            operationId: "getCurrentUserData"
+            operationId: "getCurrentUser"
             responses:
                 '201':
                     description: 'Operation successful'
@@ -107,6 +107,28 @@ paths:
                     description: "Database connection failed"
 
     /business:
+        get:
+            tags:
+                - "business"
+            summary: "Get data about business of the current user"
+            description: "Get data about business of the current user"
+            operationId: "getCurrentUserBusiness"
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/businessPayload'
+                '400':
+                    description: "Bad request"
+                '404':
+                    description: "Not found"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
         post:
             tags:
                 - "business"

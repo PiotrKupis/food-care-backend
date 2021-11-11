@@ -18,4 +18,8 @@ public class BusinessController implements BusinessApi {
         return ResponseEntity.ok(businessService.addBusiness(businessPayload));
     }
 
+    @Override
+    public ResponseEntity<BusinessPayload> getCurrentUserBusiness() {
+        return ResponseEntity.ok(businessService.getCurrentUserBusiness());
+    }
 }
