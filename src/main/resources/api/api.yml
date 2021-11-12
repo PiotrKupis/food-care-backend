@@ -186,8 +186,8 @@ paths:
         get:
             tags:
                 - "product"
-            summary: "Get product from databse"
-            description: "Get product from databse"
+            summary: "Get product from database"
+            description: "Get product from database"
             operationId: "getProduct"
             parameters:
                 -   in: path
@@ -398,4 +398,9 @@ components:
                     example: "2019-05-17"
                 vegan:
                     type: boolean
+                image:
+                    type: string
+                linkToResource:
+                    type: string
+
 
