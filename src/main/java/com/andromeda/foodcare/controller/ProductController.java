@@ -2,6 +2,7 @@ package com.andromeda.foodcare.controller;
 
 import com.andromeda.controller.ProductApi;
 import com.andromeda.dto.ProductPayload;
+import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<ProductPayload> getProduct(Long id) {
+    public ResponseEntity<ProductResponse>getProduct(Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 }

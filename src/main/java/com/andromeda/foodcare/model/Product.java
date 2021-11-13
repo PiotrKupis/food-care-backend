@@ -45,12 +45,12 @@ public class Product {
     private String expirationDate;
 
     @Column(name = "vegan")
-    private boolean vegan;
+    private String vegan;
 
     @Column(name = "link_to_resource")
     private String linkToResource;
 
-    public Product(Long ownerId, String name, double regularPrice, double discountedPrice, String expirationDate, boolean vegan, String linkToResource) {
+    public Product(Long ownerId, String name, double regularPrice, double discountedPrice, String expirationDate, String vegan, String linkToResource) {
         this.ownerId = ownerId;
         this.name = name;
         this.regularPrice = regularPrice;

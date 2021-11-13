@@ -1,6 +1,7 @@
 package com.andromeda.foodcare.service;
 
 import com.andromeda.dto.ProductPayload;
+import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.mapper.ProductMapper;
 import com.andromeda.foodcare.model.Product;
 import com.andromeda.foodcare.repository.ProductRepository;
@@ -47,8 +48,8 @@ public class ProductService {
         return productMapper.toProductPayload(product);
     }
 
-    public ProductPayload getProduct(Long id) {
+    public ProductResponse getProduct(Long id) {
 
-        return productMapper.toProductPayload(productRepository.getById(id));
+        return productMapper.toProductResponse(productRepository.getById(id));
     }
 }

@@ -1,6 +1,7 @@
 package com.andromeda.foodcare.mapper;
 
 import com.andromeda.dto.ProductPayload;
+import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.model.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,4 +13,6 @@ public abstract class ProductMapper {
     public abstract Product toProduct(ProductPayload productPayload);
 
     public abstract ProductPayload toProductPayload(Product product);
+
+    public abstract ProductResponse toProductResponse(Product product);
 }
