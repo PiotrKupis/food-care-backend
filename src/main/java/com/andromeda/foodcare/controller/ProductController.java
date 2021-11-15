@@ -15,7 +15,7 @@ public class ProductController implements ProductApi {
     private final ProductService productService;
 
     @Override
-    public ResponseEntity<ProductPayload> addProduct(ProductPayload productPayload) {
+    public ResponseEntity<ProductResponse> addProduct(ProductPayload productPayload) {
         return ResponseEntity.ok(productService.addProduct(productPayload));
     }
 

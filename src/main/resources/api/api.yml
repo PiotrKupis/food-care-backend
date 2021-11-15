@@ -174,7 +174,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/productPayload'
+                                $ref: '#/components/schemas/productResponse'
                 '400':
                     description: "Bad request"
                 '500':
@@ -391,7 +391,7 @@ components:
                     pattern: '^\d{4}-\d{2}-\d{2}$'
                     example: "2019-05-17"
                 vegan:
-                    type: string
+                    type: boolean
                 image:
                     type: string
 
@@ -421,7 +421,7 @@ components:
                     pattern: '^\d{4}-\d{2}-\d{2}$'
                     example: "2019-05-17"
                 vegan:
-                    type: string
+                    type: boolean
                 linkToResource:
                     type: string
 

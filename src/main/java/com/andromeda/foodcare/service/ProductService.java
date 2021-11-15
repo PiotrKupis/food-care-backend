@@ -25,7 +25,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     @Transactional
-    public ProductPayload addProduct(ProductPayload productPayload) {
+    public ProductResponse addProduct(ProductPayload productPayload) {
         Product product = productMapper.toProduct(productPayload);
         log.info("Adding a new product " + product.getName());
 
@@ -45,11 +45,10 @@ public class ProductService {
         }
 
         product = productRepository.save(product);
-        return productMapper.toProductPayload(product);
+        return productMapper.toProductResponse(product);
     }
 
     public ProductResponse getProduct(Long id) {
-
         return productMapper.toProductResponse(productRepository.getById(id));
     }
 }

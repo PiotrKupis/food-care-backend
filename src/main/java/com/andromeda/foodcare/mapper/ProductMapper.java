@@ -14,5 +14,6 @@ public abstract class ProductMapper {
 
     public abstract ProductPayload toProductPayload(Product product);
 
+
     public abstract ProductResponse toProductResponse(Product product);
 }
