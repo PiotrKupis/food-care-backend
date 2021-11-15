@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class ProductController implements ProductApi {
@@ -22,5 +24,10 @@ public class ProductController implements ProductApi {
     @Override
     public ResponseEntity<ProductResponse>getProduct(Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> getProductsList(Long ownerId) {
+        return ResponseEntity.ok(productService.getProductsList(ownerId));
     }
 }

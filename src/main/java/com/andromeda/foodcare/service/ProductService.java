@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -50,5 +52,18 @@ public class ProductService {
 
     public ProductResponse getProduct(Long id) {
         return productMapper.toProductResponse(productRepository.getById(id));
+    }
+
+    public List<ProductResponse> getProductsList(Long ownerId) {
+        List<Product> productsList = productRepository.getAllByOwnerId(ownerId);
+        
+        List<ProductResponse> productResponseList = new ArrayList<>();
+
+        for (Product product :
+                productsList) {
+            productResponseList.add(productMapper.toProductResponse(product));
+        }
+
+        return productResponseList;
     }
 }
