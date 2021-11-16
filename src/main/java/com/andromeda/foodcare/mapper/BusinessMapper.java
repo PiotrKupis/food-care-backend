@@ -33,6 +33,8 @@ public abstract class BusinessMapper {
     @Mapping(target = "closeHour", expression = "java(timeToString(business.getCloseHour()))")
     public abstract BusinessPayload toBusinessPayload(Business business);
 
+
+
     public abstract BusinessResponse toBusinessResponse(Business business);
 
     public String timeToString(LocalTime time) {

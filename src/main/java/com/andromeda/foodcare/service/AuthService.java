@@ -47,11 +47,11 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtProvider.generateToken(loginRequest.getEmail());
-            UserRole role = userRepository.findByEmail(loginRequest.getEmail())
-                .map(User::getRole)
-                .orElseThrow(AuthException::badCredentials);
+            User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(AuthException::badCredentials);
+            UserRole role = user.getRole();
 
             AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+            authenticationResponse.setId(user.getId());
             authenticationResponse.setAuthToken(token);
             authenticationResponse.setEmail(loginRequest.getEmail());
             authenticationResponse.setRole(role.toString());

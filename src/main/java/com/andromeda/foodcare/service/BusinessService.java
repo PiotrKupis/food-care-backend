@@ -26,7 +26,7 @@ public class BusinessService {
     private final BusinessMapper businessMapper;
 
     @Transactional
-    public BusinessPayload addBusiness(BusinessPayload businessPayload) {
+    public BusinessResponse addBusiness(BusinessPayload businessPayload) {
         Business business = businessMapper.toBusiness(businessPayload);
         log.info("Adding a new business " + business.getName());
 
@@ -34,16 +34,16 @@ public class BusinessService {
         User currentUser = authService.getCurrentUser();
         currentUser.setRole(UserRole.BUSINESS);
         currentUser.setBusiness(business);
-        return businessMapper.toBusinessPayload(business);
+        return businessMapper.toBusinessResponse(business);
     }
 
-    public BusinessPayload getCurrentUserBusiness() {
+    public BusinessResponse getCurrentUserBusiness() {
         log.info("Getting business of the current user");
         User currentUser = authService.getCurrentUser();
         if (currentUser.getBusiness() == null) {
             throw UserException.userDoesntHaveBusiness();
         }
-        return businessMapper.toBusinessPayload(currentUser.getBusiness());
+        return businessMapper.toBusinessResponse(currentUser.getBusiness());
     }
 
     public List<BusinessResponse> getAllBusinessesList(String city) {

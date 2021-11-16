@@ -17,12 +17,14 @@ public class BusinessController implements BusinessApi {
     private final BusinessService businessService;
 
     @Override
-    public ResponseEntity<BusinessPayload> addBusiness(BusinessPayload businessPayload) {
+    public ResponseEntity<BusinessResponse> addBusiness(BusinessPayload businessPayload) {
         return ResponseEntity.ok(businessService.addBusiness(businessPayload));
     }
 
+
+
     @Override
-    public ResponseEntity<BusinessPayload> getCurrentUserBusiness() {
+    public ResponseEntity<BusinessResponse> getCurrentUserBusiness() {
         return ResponseEntity.ok(businessService.getCurrentUserBusiness());
     }
 
