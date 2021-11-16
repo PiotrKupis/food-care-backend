@@ -9,6 +9,8 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +44,8 @@ public class ProductService {
         try {
             Map uploadResult = cloudinary.uploader().upload(productPayload.getImage(), ObjectUtils.emptyMap());
             product.setLinkToResource((String) uploadResult.get("url"));
+            System.out.println(uploadResult);
+            product.setPublicId((String) uploadResult.get("public_id"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,14 +60,33 @@ public class ProductService {
 
     public List<ProductResponse> getProductsList(Long ownerId) {
         List<Product> productsList = productRepository.getAllByOwnerId(ownerId);
-        
         List<ProductResponse> productResponseList = new ArrayList<>();
-
         for (Product product :
                 productsList) {
             productResponseList.add(productMapper.toProductResponse(product));
         }
-
         return productResponseList;
     }
+
+    public ResponseEntity<Void> deleteProduct(Long id) {
+
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "food-care",
+                "api_key", "961217742925776",
+                "api_secret", "0FXcNuucLmOTwlv3Qw-Tco7uEBc",
+                "secure", true));
+
+        Product product = productRepository.getById(id);
+        try {
+            Map result = cloudinary.uploader().destroy(product.getPublicId(), ObjectUtils.emptyMap());
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        productRepository.delete(product);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

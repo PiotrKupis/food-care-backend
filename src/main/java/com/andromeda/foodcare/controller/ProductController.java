@@ -22,12 +22,17 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<ProductResponse>getProduct(Long id) {
+    public ResponseEntity<ProductResponse> getProduct(Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
     @Override
     public ResponseEntity<List<ProductResponse>> getProductsList(Long ownerId) {
         return ResponseEntity.ok(productService.getProductsList(ownerId));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteProduct(Long id) {
+        return productService.deleteProduct(id);
     }
 }

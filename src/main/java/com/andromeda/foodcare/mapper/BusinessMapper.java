@@ -1,8 +1,11 @@
 package com.andromeda.foodcare.mapper;
 
 import com.andromeda.dto.BusinessPayload;
+import com.andromeda.dto.BusinessResponse;
 import com.andromeda.foodcare.model.Business;
+
 import java.time.LocalTime;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -29,6 +32,8 @@ public abstract class BusinessMapper {
     @Mapping(target = "openHour", expression = "java(timeToString(business.getOpenHour()))")
     @Mapping(target = "closeHour", expression = "java(timeToString(business.getCloseHour()))")
     public abstract BusinessPayload toBusinessPayload(Business business);
+
+    public abstract BusinessResponse toBusinessResponse(Business business);
 
     public String timeToString(LocalTime time) {
         return time.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));

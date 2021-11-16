@@ -50,6 +50,9 @@ public class Product {
     @Column(name = "link_to_resource")
     private String linkToResource;
 
+    @Column(name = "public_id")
+    private String publicId;
+
     public Product(Long ownerId, String name, double regularPrice, double discountedPrice, String expirationDate, boolean vegan, String linkToResource) {
         this.ownerId = ownerId;
         this.name = name;
