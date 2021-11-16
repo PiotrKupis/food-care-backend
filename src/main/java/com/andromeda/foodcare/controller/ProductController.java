@@ -32,7 +32,7 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<Void> deleteProduct(Long id) {
-        return productService.deleteProduct(id);
+    public ResponseEntity<String> deleteProduct(Long id) {
+        return ResponseEntity.ok(productService.deleteProduct(id));
     }
 }

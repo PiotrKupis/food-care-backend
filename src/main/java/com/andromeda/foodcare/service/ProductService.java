@@ -68,7 +68,7 @@ public class ProductService {
         return productResponseList;
     }
 
-    public ResponseEntity<Void> deleteProduct(Long id) {
+    public String deleteProduct(Long id) {
 
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "food-care",
@@ -78,15 +78,12 @@ public class ProductService {
 
         Product product = productRepository.getById(id);
         try {
-            Map result = cloudinary.uploader().destroy(product.getPublicId(), ObjectUtils.emptyMap());
-            System.out.println(result);
+            cloudinary.uploader().destroy(product.getPublicId(), ObjectUtils.emptyMap());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         productRepository.delete(product);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return "Product deleted successfully.";
     }
-
-
 }
