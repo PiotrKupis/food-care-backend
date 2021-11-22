@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface BusinessRepository extends JpaRepository<Business, Long> {
-
     List<Business> getAllByAddress_City(String city);
+    List<Business> findByNameIgnoreCase(String name);
 }

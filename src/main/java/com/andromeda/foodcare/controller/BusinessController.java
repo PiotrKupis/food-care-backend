@@ -21,8 +21,6 @@ public class BusinessController implements BusinessApi {
         return ResponseEntity.ok(businessService.addBusiness(businessPayload));
     }
 
-
-
     @Override
     public ResponseEntity<BusinessResponse> getCurrentUserBusiness() {
         return ResponseEntity.ok(businessService.getCurrentUserBusiness());
@@ -31,5 +29,10 @@ public class BusinessController implements BusinessApi {
     @Override
     public ResponseEntity<List<BusinessResponse>> getBusinessesList(String city) {
         return ResponseEntity.ok(businessService.getAllBusinessesList(city));
+    }
+
+    @Override
+    public ResponseEntity<List<BusinessResponse>> findBusinesses(String name) {
+        return ResponseEntity.ok(businessService.findBusinessByName(name));
     }
 }

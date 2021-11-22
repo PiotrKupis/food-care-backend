@@ -49,13 +49,24 @@ public class BusinessService {
     public List<BusinessResponse> getAllBusinessesList(String city) {
         log.info("Getting business in selected city");
         List<Business> businessList = businessRepository.getAllByAddress_City(city);
+
+        return getBusinessResponsesList(businessList);
+    }
+
+    public List<BusinessResponse> findBusinessByName(String name) {
+        log.info("Looking for businesses with name like: " + name);
+        List<Business> businessList = businessRepository.findByNameIgnoreCase(name);
+
+        return getBusinessResponsesList(businessList);
+    }
+
+    private List<BusinessResponse> getBusinessResponsesList(List<Business> businessList) {
         List<BusinessResponse> businessResponseList = new ArrayList<>();
 
         for (Business business :
                 businessList) {
             businessResponseList.add(businessMapper.toBusinessResponse(business));
         }
-
         return businessResponseList;
     }
 }
