@@ -84,6 +84,6 @@ public class ProductService {
         }
 
         productRepository.delete(product);
-        return "Product deleted successfully.";
+        return "\"Product deleted successfully.\"";
     }
 }
