@@ -91,7 +91,7 @@ public class ProductService {
     public List<ProductResponse> getLatestProducts(Integer quantity) {
         log.info("Getting the latest products");
         List<Product> products = productRepository.findAll().stream()
-            .sorted(Comparator.comparing(Product::getCreationDate))
+            .sorted(Comparator.comparing(Product::getCreationDate).reversed())
             .collect(Collectors.toList());
 
         if (quantity != null) {
