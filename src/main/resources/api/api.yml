@@ -332,6 +332,32 @@ paths:
                 '503':
                     description: "Database connection failed"
 
+    /product/search_latest:
+        get:
+            tags:
+                - "product"
+            summary: "Get the latest products"
+            description: "Get the latest products"
+            operationId: "getLatestProducts"
+            parameters:
+                -   name: quantity
+                    in: query
+                    schema:
+                        type: integer
+                        minimum: 1
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/productListResponse'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
 
 components:
     schemas:

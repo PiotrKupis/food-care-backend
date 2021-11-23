@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public abstract class ProductMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creationDate", ignore = true)
     public abstract Product toProduct(ProductPayload productPayload);
 
     public abstract ProductPayload toProductPayload(Product product);

@@ -1,12 +1,20 @@
 package com.andromeda.foodcare.model;
 
-import lombok.*;
-
-import javax.persistence.*;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @ToString
 @Entity(name = "products")
@@ -53,7 +61,12 @@ public class Product {
     @Column(name = "public_id")
     private String publicId;
 
-    public Product(Long ownerId, String name, double regularPrice, double discountedPrice, String expirationDate, boolean vegan, String linkToResource) {
+    @NotNull
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    public Product(Long ownerId, String name, double regularPrice, double discountedPrice,
+        String expirationDate, boolean vegan, String linkToResource) {
         this.ownerId = ownerId;
         this.name = name;
         this.regularPrice = regularPrice;
