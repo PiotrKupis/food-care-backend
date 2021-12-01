@@ -5,6 +5,8 @@ import com.andromeda.dto.FavoritePayload;
 import com.andromeda.foodcare.mapper.BusinessMapper;
 import com.andromeda.foodcare.model.Business;
 import com.andromeda.foodcare.model.User;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,12 @@ public class FavoriteService {
         Business business = businessService.getBusinessById(favoritePayload.getBusinessId());
         currentUser.getFavorites().add(business);
         return businessMapper.toBusinessResponse(business);
+    }
+
+    public List<BusinessResponse> getFavoriteBusinesses() {
+        log.info("Getting favorite businesses");
+        return authService.getCurrentUser().getFavorites().stream()
+            .map(businessMapper::toBusinessResponse)
+            .collect(Collectors.toList());
     }
 }
