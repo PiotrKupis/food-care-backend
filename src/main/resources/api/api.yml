@@ -214,6 +214,33 @@ paths:
                 '503':
                     description: "Database connection failed"
 
+    /business/top_rated:
+        get:
+            tags:
+                - "business"
+            summary: "Get sorted list of the top rated businesses"
+            description: "Get sorted list of the top rated businesses"
+            operationId: "getTopRated"
+            parameters:
+                -   name: quantity
+                    in: query
+                    schema:
+                        type: integer
+                        minimum: 1
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/businessListResponse'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
     /product/add_product:
         post:
             tags:
@@ -683,7 +710,3 @@ components:
             type: array
             items:
                 $ref: '#/components/schemas/businessResponse'
-
-
-
-

@@ -34,4 +34,9 @@ public class BusinessController implements BusinessApi {
     public ResponseEntity<List<BusinessResponse>> findBusinesses(String name) {
         return ResponseEntity.ok(businessService.findBusinessByName(name));
     }
+
+    @Override
+    public ResponseEntity<List<BusinessResponse>> getTopRated(Integer quantity) {
+        return ResponseEntity.ok(businessService.getTopRated(quantity));
+    }
 }
