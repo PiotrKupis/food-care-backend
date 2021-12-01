@@ -3,18 +3,18 @@ package com.andromeda.foodcare.service;
 import com.andromeda.dto.BusinessPayload;
 import com.andromeda.dto.BusinessResponse;
 import com.andromeda.foodcare.enums.UserRole;
+import com.andromeda.foodcare.exceptions.BusinessException;
 import com.andromeda.foodcare.exceptions.UserException;
 import com.andromeda.foodcare.mapper.BusinessMapper;
 import com.andromeda.foodcare.model.Business;
 import com.andromeda.foodcare.model.User;
 import com.andromeda.foodcare.repository.BusinessRepository;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
@@ -64,9 +64,14 @@ public class BusinessService {
         List<BusinessResponse> businessResponseList = new ArrayList<>();
 
         for (Business business :
-                businessList) {
+            businessList) {
             businessResponseList.add(businessMapper.toBusinessResponse(business));
         }
         return businessResponseList;
+    }
+
+    public Business getBusinessById(Long id) {
+        return businessRepository.findById(id)
+            .orElseThrow(BusinessException::businessNotFound);
     }
 }

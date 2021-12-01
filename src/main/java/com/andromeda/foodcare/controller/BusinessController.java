@@ -4,11 +4,10 @@ import com.andromeda.controller.BusinessApi;
 import com.andromeda.dto.BusinessPayload;
 import com.andromeda.dto.BusinessResponse;
 import com.andromeda.foodcare.service.BusinessService;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @AllArgsConstructor
 @RestController

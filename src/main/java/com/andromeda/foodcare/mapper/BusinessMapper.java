@@ -3,9 +3,7 @@ package com.andromeda.foodcare.mapper;
 import com.andromeda.dto.BusinessPayload;
 import com.andromeda.dto.BusinessResponse;
 import com.andromeda.foodcare.model.Business;
-
 import java.time.LocalTime;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

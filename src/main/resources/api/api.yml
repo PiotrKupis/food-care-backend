@@ -359,6 +359,36 @@ paths:
                 '503':
                     description: "Database connection failed"
 
+    /rating/business:
+        post:
+            tags:
+                - "rating"
+            summary: "Add new business rating"
+            description: "Add new business rating"
+            operationId: "addBusinessRating"
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ratingPayload'
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ratingPayload'
+                '400':
+                    description: "Bad request"
+                '409':
+                    description: "Conflict"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
+
 components:
     schemas:
 
@@ -626,6 +656,23 @@ components:
                     type: boolean
                 linkToResource:
                     type: string
+
+        ratingPayload:
+            type: object
+            properties:
+                businessId:
+                    type: integer
+                    format: int64
+                    minimum: 1
+                rating:
+                    type: number
+                    format: float
+                    minimum: 0
+                    maximum: 5
+                    multipleOf: 0.5
+            required:
+                - businessId
+                - rating
 
         productListResponse:
             type: array

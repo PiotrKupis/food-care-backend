@@ -47,7 +47,8 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtProvider.generateToken(loginRequest.getEmail());
-            User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(AuthException::badCredentials);
+            User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(AuthException::badCredentials);
             UserRole role = user.getRole();
 
             AuthenticationResponse authenticationResponse = new AuthenticationResponse();

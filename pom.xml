@@ -34,101 +34,101 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
         </dependency>
 
         <dependency>
-            <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http44</artifactId>
+            <groupId>com.cloudinary</groupId>
             <version>1.29.0</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <groupId>org.springframework.boot</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+            <groupId>org.springframework.boot</groupId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+        <dependency>
             <artifactId>spring-security-test</artifactId>
+            <groupId>org.springframework.security</groupId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
+            <groupId>org.postgresql</groupId>
             <scope>runtime</scope>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <groupId>org.projectlombok</groupId>
             <optional>true</optional>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
+            <groupId>org.springdoc</groupId>
             <version>${springdoc.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
+            <groupId>io.springfox</groupId>
             <version>${springfox.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
+            <groupId>io.swagger</groupId>
             <version>${swagger.annotations.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.springfox</groupId>
             <artifactId>springfox-core</artifactId>
+            <groupId>io.springfox</groupId>
             <version>${springfox.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
+            <groupId>org.openapitools</groupId>
             <version>${jackson.databind.nullable.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+            <groupId>org.mapstruct</groupId>
             <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
             <version>${jsonwebtoken.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>${jsonwebtoken.version}</version>
+            <groupId>io.jsonwebtoken</groupId>
             <scope>runtime</scope>
+            <version>${jsonwebtoken.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>${jsonwebtoken.version}</version>
+            <groupId>io.jsonwebtoken</groupId>
             <scope>runtime</scope>
+            <version>${jsonwebtoken.version}</version>
         </dependency>
     </dependencies>
 
