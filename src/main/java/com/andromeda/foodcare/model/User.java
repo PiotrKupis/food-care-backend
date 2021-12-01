@@ -1,6 +1,8 @@
 package com.andromeda.foodcare.model;
 
 import com.andromeda.foodcare.enums.UserRole;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -67,6 +71,12 @@ public class User {
         name = "business_id",
         referencedColumnName = "id")
     private Business business;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "favorite",
+        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "business_id", referencedColumnName = "id")})
+    private Set<Business> favorites = new HashSet<>();
 
     public User(String name, UserRole role, String password, String email, String phoneNumber) {
         this.name = name;
