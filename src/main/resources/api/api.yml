@@ -879,9 +879,11 @@ components:
                 longitude:
                     type: number
                     format: double
-                    maximum: 1000
+                    minimum: -90
+                    maximum: 90
                 latitude:
                     type: number
                     format: double
-                    maximum: 1000
+                    minimum: -90
+                    maximum: 90
 
