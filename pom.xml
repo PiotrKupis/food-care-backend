@@ -18,16 +18,16 @@
 
     <properties>
         <java.version>11</java.version>
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
-        <springdoc.version>1.5.2</springdoc.version>
+        <springdoc.version>1.5.12</springdoc.version>
         <openapi.generator.maven.plugin.version>5.2.0</openapi.generator.maven.plugin.version>
         <jackson.databind.nullable.version>0.2.1</jackson.databind.nullable.version>
         <springfox.version>3.0.0</springfox.version>
-        <swagger.annotations.version>1.6.2</swagger.annotations.version>
+        <swagger.annotations.version>1.6.3</swagger.annotations.version>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
         <maven-compiler.version>3.8.1</maven-compiler.version>
-        <postgresql.version>42.2.23</postgresql.version>
+        <postgresql.version>42.3.1</postgresql.version>
         <jsonwebtoken.version>0.11.2</jsonwebtoken.version>
         <swagger.source.filepath>/src/main/resources/api/api.yml</swagger.source.filepath>
     </properties>
@@ -129,6 +129,17 @@
             <groupId>io.jsonwebtoken</groupId>
             <scope>runtime</scope>
             <version>${jsonwebtoken.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.2</version>
         </dependency>
     </dependencies>
 

@@ -9,15 +9,16 @@ import com.andromeda.foodcare.mapper.BusinessMapper;
 import com.andromeda.foodcare.model.Business;
 import com.andromeda.foodcare.model.User;
 import com.andromeda.foodcare.repository.BusinessRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @AllArgsConstructor
@@ -68,7 +69,7 @@ public class BusinessService {
         List<BusinessResponse> businessResponseList = new ArrayList<>();
 
         for (Business business :
-            businessList) {
+                businessList) {
             businessResponseList.add(businessMapper.toBusinessResponse(business));
         }
         return businessResponseList;
@@ -76,7 +77,7 @@ public class BusinessService {
 
     public Business getBusinessById(Long id) {
         return businessRepository.findById(id)
-            .orElseThrow(BusinessException::businessNotFound);
+                .orElseThrow(BusinessException::businessNotFound);
     }
 
     public List<BusinessResponse> getTopRated(Integer quantity) {
@@ -85,14 +86,14 @@ public class BusinessService {
 
         if (quantity != null && businessesRatings.size() > 0) {
             businessesRatings = businessesRatings.entrySet().stream()
-                .limit(getQuantityOrMax(businessesRatings.size(), quantity))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+                    .limit(getQuantityOrMax(businessesRatings.size(), quantity))
+                    .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
         }
 
         return businessesRatings.keySet().stream()
-            .map(this::getBusinessById)
-            .map(businessMapper::toBusinessResponse)
-            .collect(Collectors.toList());
+                .map(this::getBusinessById)
+                .map(businessMapper::toBusinessResponse)
+                .collect(Collectors.toList());
     }
 
     private Integer getQuantityOrMax(int size, Integer quantity) {

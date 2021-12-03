@@ -2,8 +2,11 @@ package com.andromeda.foodcare.mapper;
 
 import com.andromeda.dto.BusinessPayload;
 import com.andromeda.dto.BusinessResponse;
+import com.andromeda.dto.NearestBusinessResponse;
 import com.andromeda.foodcare.model.Business;
+
 import java.time.LocalTime;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -37,6 +40,13 @@ public abstract class BusinessMapper {
     @Mapping(target = "street", source = "address.street")
     @Mapping(target = "streetNumber", source = "address.streetNumber")
     public abstract BusinessResponse toBusinessResponse(Business business);
+
+    @Mapping(target = "country", source = "address.country")
+    @Mapping(target = "city", source = "address.city")
+    @Mapping(target = "zipCode", source = "address.zipCode")
+    @Mapping(target = "street", source = "address.street")
+    @Mapping(target = "streetNumber", source = "address.streetNumber")
+    public abstract NearestBusinessResponse toNearestBusinessResponse(Business business);
 
     public String timeToString(LocalTime time) {
         return time.format(java.time.format.DateTimeFormatter.ofPattern("HH:mm"));
