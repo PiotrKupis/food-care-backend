@@ -40,7 +40,7 @@ public class DistanceService {
 
         JSONObject userCoordinates;
         String city;
-        if (!userLocationPayload.getCity().isEmpty()) {
+        if (!userLocationPayload.getCity().isEmpty() || userLocationPayload.getCity() == null) {
             String userAddress = userLocationPayload.getStreetNumber() + " " +
                     userLocationPayload.getStreet() + " " +
                     userLocationPayload.getCity();

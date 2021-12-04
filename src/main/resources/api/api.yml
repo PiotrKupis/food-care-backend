@@ -871,11 +871,6 @@ components:
                     type: string
                     minLength: 0
                     maxLength: 50
-                businessType:
-                    type: string
-                    enum:
-                        - SHOP
-                        - RESTAURANT
                 longitude:
                     type: number
                     format: double
@@ -884,6 +879,6 @@ components:
                 latitude:
                     type: number
                     format: double
-                    minimum: -90
-                    maximum: 90
+                    minimum: -180
+                    maximum: 180
 
