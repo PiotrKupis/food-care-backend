@@ -50,8 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/auth/register", "/auth/login", "/product/search_latest").permitAll()
             .antMatchers("/product/add_product").hasAnyAuthority("BUSINESS")
-            .antMatchers("/product/get_product", "/rating/business", "/business/top_rated",
-                "/favorite/business")
+            .antMatchers("/product/get_product", "/rating/business", "/rating/business/{id}",
+                "/business/top_rated", "/favorite/business")
             .hasAnyAuthority("USER", "BUSINESS")
             .antMatchers("/business").hasAnyAuthority("USER", "BUSINESS")
             .antMatchers("/user").hasAnyAuthority("USER", "BUSINESS")

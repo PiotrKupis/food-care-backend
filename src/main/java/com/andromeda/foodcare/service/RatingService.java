@@ -52,15 +52,29 @@ public class RatingService {
             .map(Rating::getBusinessId)
             .collect(Collectors.toSet());
 
-        businessIds.forEach(id -> {
-            int quantity = ratingRepository.findRatingByBusinessId(id).size();
-            Float totalRate = ratingRepository.findRatingByBusinessId(id).stream()
-                .map(Rating::getRating)
-                .reduce(0F, Float::sum);
-            businesses.put(id, totalRate / quantity);
-        });
-
+        businessIds.forEach(id -> businesses.put(id, calculateRating(id)));
         return sortByValuesDesc(businesses);
+    }
+
+    public RatingPayload getBusinessRating(Long id) {
+        log.info("Calculating rating of the business");
+        businessRepository.findById(id)
+            .orElseThrow(BusinessException::businessNotFound);
+        RatingPayload ratingPayload = new RatingPayload();
+        ratingPayload.setBusinessId(id);
+        ratingPayload.setRating(calculateRating(id));
+        return ratingPayload;
+    }
+
+    private Float calculateRating(Long id) {
+        int quantity = ratingRepository.findRatingByBusinessId(id).size();
+        Float totalRate = ratingRepository.findRatingByBusinessId(id).stream()
+            .map(Rating::getRating)
+            .reduce(0F, Float::sum);
+        if (quantity == 0) {
+            return 0F;
+        }
+        return totalRate / quantity;
     }
 
     private <K, V extends Comparable<V>> Map<K, V> sortByValuesDesc(final Map<K, V> map) {

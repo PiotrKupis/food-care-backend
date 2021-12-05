@@ -443,6 +443,36 @@ paths:
                 '503':
                     description: "Database connection failed"
 
+    /rating/business/{id}:
+        get:
+            tags:
+                - "rating"
+            summary: "Get rating of the specific business"
+            description: "Get the latest products"
+            operationId: "getBusinessRating"
+            parameters:
+                -   in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: integer
+                        format: int64
+                        minimum: 1
+                    description: The business ID
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ratingPayload'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
     /favorite/business:
         post:
             tags:

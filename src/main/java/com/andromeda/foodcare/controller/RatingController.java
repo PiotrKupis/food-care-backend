@@ -17,4 +17,9 @@ public class RatingController implements RatingApi {
     public ResponseEntity<RatingPayload> addBusinessRating(RatingPayload ratingPayload) {
         return ResponseEntity.ok(ratingService.addBusinessRating(ratingPayload));
     }
+
+    @Override
+    public ResponseEntity<RatingPayload> getBusinessRating(Long id) {
+        return ResponseEntity.ok(ratingService.getBusinessRating(id));
+    }
 }
