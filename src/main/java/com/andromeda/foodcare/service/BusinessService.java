@@ -29,6 +29,7 @@ public class BusinessService {
     private final RatingService ratingService;
     private final BusinessRepository businessRepository;
     private final BusinessMapper businessMapper;
+    private final DistanceService distanceService;
 
     @Transactional
     public BusinessResponse addBusiness(BusinessPayload businessPayload) {
@@ -98,5 +99,12 @@ public class BusinessService {
 
     private Integer getQuantityOrMax(int size, Integer quantity) {
         return size < quantity ? size : quantity;
+    }
+
+    public List<BusinessResponse> searchForBusiness(String name, Double latitude, Double longitude) {
+        List<Business> businessList = businessRepository
+                .getAllByNameIgnoreCaseContainingAndAddress_CityIgnoreCase(name, distanceService.getCityFromCoordinates(longitude, latitude));
+
+        return businessList.stream().map(businessMapper::toBusinessResponse).collect(Collectors.toList());
     }
 }

@@ -1,7 +1,6 @@
 package com.andromeda.foodcare.service;
 
 import com.andromeda.dto.NearestBusinessResponse;
-import com.andromeda.dto.UserLocationPayload;
 import com.andromeda.foodcare.mapper.BusinessMapper;
 import com.andromeda.foodcare.model.Address;
 import com.andromeda.foodcare.model.Business;
@@ -19,11 +18,14 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.cloudinary.json.JSONArray;
 import org.cloudinary.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -35,24 +37,27 @@ public class DistanceService {
     private final String GOOGLE_API_KEY = "AIzaSyBsNKAV-APTasBbztvSp-wXnZSxHSwguZI";
     private final BusinessMapper businessMapper;
 
-    public List<NearestBusinessResponse> getNearestBusinesses(UserLocationPayload userLocationPayload) {
+    public List<NearestBusinessResponse> getNearestBusinesses(String city, String street, String streetNumber,
+                                                              double longitude, double latitude) {
         log.info("Calculating distances of businesses from user.");
 
         JSONObject userCoordinates;
-        String city;
-        if (!userLocationPayload.getCity().isEmpty() || userLocationPayload.getCity() == null) {
-            String userAddress = userLocationPayload.getStreetNumber() + " " +
-                    userLocationPayload.getStreet() + " " +
-                    userLocationPayload.getCity();
+
+        if (!city.isEmpty()) {
+            String userAddress = streetNumber + " " + street + " " + city;
             userCoordinates = getCoordinates(getLocationInfo(userAddress));
-            city = userLocationPayload.getCity();
         } else {
             userCoordinates = new JSONObject();
-            userCoordinates.put("lng", userLocationPayload.getLongitude());
-            userCoordinates.put("lat", userLocationPayload.getLatitude());
-            city = getCityFromCoordinates(userLocationPayload.getLongitude(), userLocationPayload.getLatitude());
+            userCoordinates.put("lng", longitude);
+            userCoordinates.put("lat", latitude);
+            city = getCityFromCoordinates(longitude, latitude);
         }
 
+        return getNearestBusinessResponses(city, userCoordinates);
+    }
+
+    @NotNull
+    private List<NearestBusinessResponse> getNearestBusinessResponses(String city, JSONObject userCoordinates) {
         List<Long> businessesIds = businessRepository.getAllByAddress_City(city).stream()
                 .map(Business::getId)
                 .collect(Collectors.toList());
@@ -75,6 +80,19 @@ public class DistanceService {
         nearestBusinessResponseList.sort(businessComparator);
 
         return nearestBusinessResponseList;
+    }
+
+    public List<NearestBusinessResponse> getNearestBusinessesFromCoordinates(double lat, double lon) {
+        log.info("Calculating distances of businesses from user.");
+
+        JSONObject userCoordinates;
+        String city = getCityFromCoordinates(lon, lat);
+        userCoordinates = new JSONObject();
+        userCoordinates.put("lng", lon);
+        userCoordinates.put("lat", lat);
+
+
+        return getNearestBusinessResponses(city, userCoordinates);
     }
 
 

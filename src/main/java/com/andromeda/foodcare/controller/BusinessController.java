@@ -47,6 +47,13 @@ public class BusinessController implements BusinessApi {
 
     @Override
     public ResponseEntity<List<NearestBusinessResponse>> getNearestRestaurants(UserLocationPayload userLocationPayload) {
-        return ResponseEntity.ok(distanceService.getNearestBusinesses(userLocationPayload));
+        return ResponseEntity.ok(distanceService.getNearestBusinesses(userLocationPayload.getCity(),
+                userLocationPayload.getStreet(), userLocationPayload.getStreetNumber(),
+                userLocationPayload.getLongitude(), userLocationPayload.getLatitude()));
+    }
+
+    @Override
+    public ResponseEntity<List<BusinessResponse>> searchBusiness(String name, Double latitude, Double longitude) {
+        return ResponseEntity.ok(businessService.searchForBusiness(name, latitude, longitude));
     }
 }

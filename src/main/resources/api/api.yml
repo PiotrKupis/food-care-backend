@@ -154,6 +154,7 @@ paths:
                     description: "Internal server error"
                 '503':
                     description: "Database connection failed"
+
     /get_businesses_list/{city}:
         get:
             tags:
@@ -183,6 +184,7 @@ paths:
                     description: "Internal server error"
                 '503':
                     description: "Database connection failed"
+
     /get_nearest_restaurants_list:
         post:
             tags:
@@ -203,6 +205,54 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/nearestBusinessResponseList'
+                '400':
+                    description: "Bad request"
+                '404':
+                    description: "Not found"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
+    /search_business/{name}/{longitude}/{latitude}:
+        get:
+            tags:
+                - "business"
+            summary: "Get list of businesses with given name"
+            description: "Get list of businesses with given name"
+            operationId: "searchBusiness"
+            parameters:
+                -   name: name
+                    in: path
+                    required: true
+                    schema:
+                        type: string
+                        minLength: 0
+                        maxLength: 50
+                -   name: longitude
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                        format: double
+                        minimum: -180
+                        maximum: 180
+
+                -   name: latitude
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                        format: double
+                        minimum: -90
+                        maximum: 90
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/businessListResponse'
                 '400':
                     description: "Bad request"
                 '404':
@@ -319,6 +369,52 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/productResponse'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
+
+    /product/search_product/{name}/{longitude}/{latitude}:
+        get:
+            tags:
+                - "product"
+            summary: "Search for product"
+            description: "Search for product"
+            operationId: "searchProduct"
+            parameters:
+                -   name: name
+                    in: path
+                    required: true
+                    schema:
+                        type: string
+                        minLength: 0
+                        maxLength: 50
+                -   name: longitude
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                        format: double
+                        minimum: -180
+                        maximum: 180
+
+                -   name: latitude
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                        format: double
+                        minimum: -90
+                        maximum: 90
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/productListResponse'
                 '400':
                     description: "Bad request"
                 '500':
@@ -901,6 +997,11 @@ components:
                     type: string
                     minLength: 0
                     maxLength: 50
+                businessType:
+                    type: string
+                    enum:
+                        - SHOP
+                        - RESTAURANT
                 longitude:
                     type: number
                     format: double

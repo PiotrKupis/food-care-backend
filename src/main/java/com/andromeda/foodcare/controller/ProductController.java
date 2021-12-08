@@ -4,7 +4,9 @@ import com.andromeda.controller.ProductApi;
 import com.andromeda.dto.ProductPayload;
 import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.service.ProductService;
+
 import java.util.List;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +40,10 @@ public class ProductController implements ProductApi {
     @Override
     public ResponseEntity<List<ProductResponse>> getLatestProducts(Integer quantity) {
         return ResponseEntity.ok(productService.getLatestProducts(quantity));
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> searchProduct(String name, Double lat, Double len) {
+        return ResponseEntity.ok(productService.searchForProduct(name, lat, len));
     }
 }
