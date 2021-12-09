@@ -13,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> getAllByOwnerId(Long ownerId);
 
     List<Product> getAllByNameIgnoreCaseContainingAndOwnerId(String name, Long ownerId);
+
+    List<Product> getAllByNameIgnoreCaseContaining(String name);
 }

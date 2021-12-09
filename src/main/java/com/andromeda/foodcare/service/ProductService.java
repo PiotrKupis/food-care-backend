@@ -134,4 +134,12 @@ public class ProductService {
 
         return products.stream().map(productMapper::toProductResponse).collect(Collectors.toList());
     }
+
+    public List<ProductResponse> searchForProductByName(String name) {
+
+        List<Product> products = productRepository.getAllByNameIgnoreCaseContaining(name);
+        return products.stream()
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
+    }
 }

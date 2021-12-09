@@ -51,4 +51,9 @@ public class ProductController implements ProductApi {
     public ResponseEntity<List<ProductResponse>> searchProductByCity(String name, String city) {
         return ResponseEntity.ok(productService.searchForProductByCity(name, city));
     }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> searchProductByName(String name) {
+        return ResponseEntity.ok(productService.searchForProductByName(name));
+    }
 }

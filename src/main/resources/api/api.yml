@@ -458,6 +458,35 @@ paths:
                     description: "Internal server error"
                 '503':
                     description: "Database connection failed"
+    /product/search_product_by_name/{name}:
+        get:
+            tags:
+                - "product"
+            summary: "Search for product"
+            description: "Search for product"
+            operationId: "searchProductByName"
+            parameters:
+                -   name: name
+                    in: path
+                    required: true
+                    schema:
+                        type: string
+                        minLength: 0
+                        maxLength: 50
+
+            responses:
+                '201':
+                    description: 'Operation successful'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/productListResponse'
+                '400':
+                    description: "Bad request"
+                '500':
+                    description: "Internal server error"
+                '503':
+                    description: "Database connection failed"
 
     /product/delete_product/{id}:
         delete:
