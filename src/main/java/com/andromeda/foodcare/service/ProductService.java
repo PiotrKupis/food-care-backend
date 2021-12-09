@@ -4,7 +4,9 @@ import com.andromeda.dto.NearestBusinessResponse;
 import com.andromeda.dto.ProductPayload;
 import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.mapper.ProductMapper;
+import com.andromeda.foodcare.model.Business;
 import com.andromeda.foodcare.model.Product;
+import com.andromeda.foodcare.repository.BusinessRepository;
 import com.andromeda.foodcare.repository.ProductRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -31,6 +33,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final DistanceService distanceService;
+    private final BusinessRepository businessRepository;
 
     @Transactional
     public ProductResponse addProduct(ProductPayload productPayload) {
@@ -115,6 +118,17 @@ public class ProductService {
         List<NearestBusinessResponse> businessesInCity = distanceService.getNearestBusinessesFromCoordinates(lat, lon);
         List<Product> products = new ArrayList<>();
         for (NearestBusinessResponse business : businessesInCity) {
+            products.addAll(productRepository.getAllByNameIgnoreCaseContainingAndOwnerId(name, business.getId()));
+        }
+
+        return products.stream().map(productMapper::toProductResponse).collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> searchForProductByCity(String name, String city) {
+
+        List<Business> businessesInCity = businessRepository.getAllByAddress_City(city);
+        List<Product> products = new ArrayList<>();
+        for (Business business : businessesInCity) {
             products.addAll(productRepository.getAllByNameIgnoreCaseContainingAndOwnerId(name, business.getId()));
         }
 

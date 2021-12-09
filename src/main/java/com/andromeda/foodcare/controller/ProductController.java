@@ -43,7 +43,12 @@ public class ProductController implements ProductApi {
     }
 
     @Override
-    public ResponseEntity<List<ProductResponse>> searchProduct(String name, Double lat, Double len) {
-        return ResponseEntity.ok(productService.searchForProduct(name, lat, len));
+    public ResponseEntity<List<ProductResponse>> searchProduct(String name, Double lon, Double lat) {
+        return ResponseEntity.ok(productService.searchForProduct(name, lon, lat));
+    }
+
+    @Override
+    public ResponseEntity<List<ProductResponse>> searchProductByCity(String name, String city) {
+        return ResponseEntity.ok(productService.searchForProductByCity(name, city));
     }
 }
