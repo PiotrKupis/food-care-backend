@@ -56,6 +56,12 @@ public class AuthService {
             authenticationResponse.setAuthToken(token);
             authenticationResponse.setEmail(loginRequest.getEmail());
             authenticationResponse.setRole(role.toString());
+            if (user.getRole() == UserRole.BUSINESS) {
+                authenticationResponse.setBusinessId(user.getBusiness().getId());
+            } else {
+                authenticationResponse.setId(0L);
+            }
+
             log.info("Logged in user with email: " + loginRequest.getEmail());
             return authenticationResponse;
         } catch (AuthenticationException e) {
