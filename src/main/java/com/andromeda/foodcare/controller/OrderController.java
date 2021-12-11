@@ -35,4 +35,14 @@ public class OrderController implements OrderApi {
     public ResponseEntity<List<OrderResponse>> getOrdersByUserId(Long userId) {
         return ResponseEntity.ok(orderService.getOrderByUserId(userId));
     }
+
+    @Override
+    public ResponseEntity<List<OrderResponse>> getAllOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+    @Override
+    public ResponseEntity<String> deleteOrderById(Long orderId) {
+        return ResponseEntity.ok(orderService.deleteOrderById(orderId));
+    }
 }

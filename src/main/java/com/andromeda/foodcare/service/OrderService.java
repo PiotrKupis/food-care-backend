@@ -40,4 +40,15 @@ public class OrderService {
         return orderRepository.getAllByUserId(userId)
                 .stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
     }
+
+    public List<OrderResponse> getAllOrders() {
+        return orderRepository.findAll()
+                .stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
+    }
+
+
+    public String deleteOrderById(Long orderId) {
+        orderRepository.delete(orderRepository.getById(orderId));
+        return "Order deleted";
+    }
 }
