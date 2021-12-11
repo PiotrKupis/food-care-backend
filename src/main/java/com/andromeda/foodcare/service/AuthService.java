@@ -59,7 +59,7 @@ public class AuthService {
             if (user.getRole() == UserRole.BUSINESS) {
                 authenticationResponse.setBusinessId(user.getBusiness().getId());
             } else {
-                authenticationResponse.setId(0L);
+                authenticationResponse.setBusinessId(0L);
             }
 
             log.info("Logged in user with email: " + loginRequest.getEmail());
