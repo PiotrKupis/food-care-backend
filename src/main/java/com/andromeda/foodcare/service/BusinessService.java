@@ -72,8 +72,7 @@ public class BusinessService {
     private List<BusinessResponse> getBusinessResponsesList(List<Business> businessList) {
         List<BusinessResponse> businessResponseList = new ArrayList<>();
 
-        for (Business business :
-            businessList) {
+        for (Business business : businessList) {
             businessResponseList.add(businessMapper.toBusinessResponse(business));
         }
         return businessResponseList;
