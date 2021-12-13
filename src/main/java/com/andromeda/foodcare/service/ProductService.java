@@ -71,11 +71,17 @@ public class ProductService {
 
     public List<ProductResponse> getProductsList(Long ownerId) {
         List<Product> productsList = productRepository.getAllByOwnerId(ownerId);
+
+        productsList = productsList.stream()
+            .filter(product -> !isProductSold(product))
+            .collect(Collectors.toList());
+
         List<ProductResponse> productResponseList = new ArrayList<>();
         for (Product product :
                 productsList) {
             productResponseList.add(productMapper.toProductResponse(product));
         }
+
         return productResponseList;
     }
 
