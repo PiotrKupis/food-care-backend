@@ -5,12 +5,14 @@ import com.andromeda.dto.ProductPayload;
 import com.andromeda.dto.ProductResponse;
 import com.andromeda.foodcare.mapper.ProductMapper;
 import com.andromeda.foodcare.model.Business;
+import com.andromeda.foodcare.model.Order;
 import com.andromeda.foodcare.model.Product;
 import com.andromeda.foodcare.repository.BusinessRepository;
 import com.andromeda.foodcare.repository.OrderRepository;
 import com.andromeda.foodcare.repository.ProductRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,13 +47,13 @@ public class ProductService {
         product.setOwnerId(authService.getCurrentUser().getId());
 
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "food-care",
-            "api_key", "961217742925776",
-            "api_secret", "0FXcNuucLmOTwlv3Qw-Tco7uEBc",
-            "secure", true));
+                "cloud_name", "food-care",
+                "api_key", "961217742925776",
+                "api_secret", "0FXcNuucLmOTwlv3Qw-Tco7uEBc",
+                "secure", true));
         try {
             Map uploadResult = cloudinary.uploader()
-                .upload(productPayload.getImage(), ObjectUtils.emptyMap());
+                    .upload(productPayload.getImage(), ObjectUtils.emptyMap());
             product.setLinkToResource((String) uploadResult.get("url"));
             System.out.println(uploadResult);
             product.setPublicId((String) uploadResult.get("public_id"));
@@ -70,7 +73,7 @@ public class ProductService {
         List<Product> productsList = productRepository.getAllByOwnerId(ownerId);
         List<ProductResponse> productResponseList = new ArrayList<>();
         for (Product product :
-            productsList) {
+                productsList) {
             productResponseList.add(productMapper.toProductResponse(product));
         }
         return productResponseList;
@@ -79,10 +82,10 @@ public class ProductService {
     public String deleteProduct(Long id) {
 
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-            "cloud_name", "food-care",
-            "api_key", "961217742925776",
-            "api_secret", "0FXcNuucLmOTwlv3Qw-Tco7uEBc",
-            "secure", true));
+                "cloud_name", "food-care",
+                "api_key", "961217742925776",
+                "api_secret", "0FXcNuucLmOTwlv3Qw-Tco7uEBc",
+                "secure", true));
 
         Product product = productRepository.getById(id);
         try {
@@ -98,20 +101,20 @@ public class ProductService {
     public List<ProductResponse> getLatestProducts(Integer quantity) {
         log.info("Getting the latest products");
         List<Product> products = productRepository.findAll().stream()
-            .sorted(Comparator.comparing(Product::getCreationDate).reversed())
-            .collect(Collectors.toList());
+                .sorted(Comparator.comparing(Product::getCreationDate).reversed())
+                .collect(Collectors.toList());
 
         if (quantity != null) {
             products = products.subList(0, getQuantityOrMax(products, quantity));
         }
 
         products = products.stream()
-            .filter(product -> !isProductSold(product))
-            .collect(Collectors.toList());
+                .filter(product -> !isProductSold(product))
+                .collect(Collectors.toList());
 
         return products.stream()
-            .map(productMapper::toProductResponse)
-            .collect(Collectors.toList());
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
     }
 
     private Integer getQuantityOrMax(List<Product> products, Integer quantity) {
@@ -120,16 +123,16 @@ public class ProductService {
 
     public List<ProductResponse> searchForProduct(String name, Double lat, Double lon) {
         List<NearestBusinessResponse> businessesInCity = distanceService.getNearestBusinessesFromCoordinates(
-            lat, lon);
+                lat, lon);
         List<Product> products = new ArrayList<>();
         for (NearestBusinessResponse business : businessesInCity) {
             products.addAll(productRepository.getAllByNameIgnoreCaseContainingAndOwnerId(name,
-                business.getId()));
+                    business.getId()));
         }
 
         products = products.stream()
-            .filter(product -> !isProductSold(product))
-            .collect(Collectors.toList());
+                .filter(product -> !isProductSold(product))
+                .collect(Collectors.toList());
 
         return products.stream().map(productMapper::toProductResponse).collect(Collectors.toList());
     }
@@ -140,12 +143,12 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         for (Business business : businessesInCity) {
             products.addAll(productRepository.getAllByNameIgnoreCaseContainingAndOwnerId(name,
-                business.getId()));
+                    business.getId()));
         }
 
         products = products.stream()
-            .filter(product -> !isProductSold(product))
-            .collect(Collectors.toList());
+                .filter(product -> !isProductSold(product))
+                .collect(Collectors.toList());
 
         return products.stream().map(productMapper::toProductResponse).collect(Collectors.toList());
     }
@@ -155,15 +158,35 @@ public class ProductService {
         List<Product> products = productRepository.getAllByNameIgnoreCaseContaining(name);
 
         products = products.stream()
-            .filter(product -> !isProductSold(product))
-            .collect(Collectors.toList());
+                .filter(product -> !isProductSold(product))
+                .collect(Collectors.toList());
 
         return products.stream()
-            .map(productMapper::toProductResponse)
-            .collect(Collectors.toList());
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
     }
 
     private boolean isProductSold(Product product) {
         return orderRepository.getByProductId(product.getId()).isPresent();
+    }
+
+    public List<ProductResponse> getProductsFromOderByBusinessId(Integer businessId) {
+        List<Order> orders = orderRepository.getAllByBusinessId(Long.valueOf(businessId));
+
+        List<Product> products = orders.stream().map(order -> productRepository.getById(order.getProductId())).collect(Collectors.toList());
+
+        return products.stream()
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<ProductResponse> getProductsFromOderByUserId(Integer userId) {
+        List<Order> orders = orderRepository.getAllByUserId(Long.valueOf(userId));
+
+        List<Product> products = orders.stream().map(order -> productRepository.getById(order.getProductId())).collect(Collectors.toList());
+
+        return products.stream()
+                .map(productMapper::toProductResponse)
+                .collect(Collectors.toList());
     }
 }

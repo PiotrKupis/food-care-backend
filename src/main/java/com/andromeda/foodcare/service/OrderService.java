@@ -30,7 +30,6 @@ public class OrderService {
         return orderMapper.toOrderResponse(orderRepository.getAllById(orderId));
     }
 
-
     public List<OrderResponse> getOrderByBusinessId(Long businessId) {
         return orderRepository.getAllByBusinessId(businessId)
                 .stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
@@ -45,7 +44,6 @@ public class OrderService {
         return orderRepository.findAll()
                 .stream().map(orderMapper::toOrderResponse).collect(Collectors.toList());
     }
-
 
     public String deleteOrderById(Long orderId) {
         orderRepository.delete(orderRepository.getById(orderId));
