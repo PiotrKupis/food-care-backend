@@ -25,7 +25,6 @@ public class FavoriteController implements FavoriteApi {
     public ResponseEntity<List<BusinessResponse>> getFavoriteBusinesses() {
         return ResponseEntity.ok(favoriteService.getFavoriteBusinesses());
     }
-
     @Override
     public ResponseEntity<String> deleteBusinessFromFavorite(Long id) {
         return ResponseEntity.ok(favoriteService.deleteBusinessFromFavorite(id));
