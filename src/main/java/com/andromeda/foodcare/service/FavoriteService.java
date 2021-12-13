@@ -45,6 +45,6 @@ public class FavoriteService {
         User currentUser = authService.getCurrentUser();
         Business business = businessService.getBusinessById(id);
         currentUser.getFavorites().remove(business);
-        return "Order deleted";
+        return "\"Order deleted\"";
     }
 }
