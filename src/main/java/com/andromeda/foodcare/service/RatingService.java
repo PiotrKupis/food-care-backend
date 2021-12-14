@@ -7,10 +7,12 @@ import com.andromeda.foodcare.model.Rating;
 import com.andromeda.foodcare.model.User;
 import com.andromeda.foodcare.repository.BusinessRepository;
 import com.andromeda.foodcare.repository.RatingRepository;
-import java.util.Comparator;
-import java.util.Map;
+import com.andromeda.foodcare.utils.TotalRate;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,15 +47,17 @@ public class RatingService {
         return ratingMapper.toRatingPayload(rating);
     }
 
-    public Map<Long, Float> getAvgBusinessesRatings() {
+    public List<TotalRate> getAvgBusinessesRatings() {
         log.info("Calculating top rated businesses");
-        Map<Long, Float> businesses = new TreeMap<>();
+        List<TotalRate> totalRates = new ArrayList<>();
+
         Set<Long> businessIds = ratingRepository.findAll().stream()
             .map(Rating::getBusinessId)
             .collect(Collectors.toSet());
+        businessIds.forEach(id -> totalRates.add(new TotalRate(id, calculateRating(id))));
+        totalRates.sort(Collections.reverseOrder());
 
-        businessIds.forEach(id -> businesses.put(id, calculateRating(id)));
-        return sortByValuesDesc(businesses);
+        return totalRates;
     }
 
     public RatingPayload getBusinessRating(Long id) {
@@ -74,21 +78,10 @@ public class RatingService {
         if (quantity == 0) {
             return 0F;
         }
-        return totalRate / quantity;
-    }
 
-    private <K, V extends Comparable<V>> Map<K, V> sortByValuesDesc(final Map<K, V> map) {
-        Comparator<K> valueComparator = (k1, k2) -> {
-            int comp = map.get(k1).compareTo(map.get(k2));
-            if (comp == 0) {
-                return 1;
-            } else {
-                return -comp;
-            }
-        };
-
-        Map<K, V> sorted = new TreeMap<>(valueComparator);
-        sorted.putAll(map);
-        return sorted;
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+        Double rate = (double)totalRate / quantity;
+        String format = decimalFormat.format(rate).replace(",",".");
+        return Float.valueOf(format);
     }
 }

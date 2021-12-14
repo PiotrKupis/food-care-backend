@@ -9,10 +9,9 @@ import com.andromeda.foodcare.mapper.BusinessMapper;
 import com.andromeda.foodcare.model.Business;
 import com.andromeda.foodcare.model.User;
 import com.andromeda.foodcare.repository.BusinessRepository;
+import com.andromeda.foodcare.utils.TotalRate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -85,16 +84,16 @@ public class BusinessService {
 
     public List<BusinessResponse> getTopRated(Integer quantity) {
         log.info("Getting top rated businesses");
-        Map<Long, Float> businessesRatings = ratingService.getAvgBusinessesRatings();
+        List<TotalRate> totalRates = ratingService.getAvgBusinessesRatings();
 
-        if (quantity != null && businessesRatings.size() > 0) {
-            businessesRatings = businessesRatings.entrySet().stream()
-                .limit(getQuantityOrMax(businessesRatings.size(), quantity))
-                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+        if (quantity != null && totalRates.size() > 0) {
+            totalRates = totalRates.stream()
+                .limit(getQuantityOrMax(totalRates.size(), quantity))
+                .collect(Collectors.toList());
         }
 
-        return businessesRatings.keySet().stream()
-            .map(this::getBusinessById)
+        return totalRates.stream()
+            .map(totalRate -> getBusinessById(totalRate.getBusinessId()))
             .map(businessMapper::toBusinessResponse)
             .collect(Collectors.toList());
     }
