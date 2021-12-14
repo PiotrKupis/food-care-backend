@@ -69,14 +69,14 @@ public class ProductService {
         return productMapper.toProductResponse(productRepository.getById(id));
     }
 
-    public List<ProductResponse> getProductsList(Long ownerId) {
-        List<Product> productsList = productRepository.getAllByOwnerId(ownerId);
-        List<ProductResponse> productResponseList = new ArrayList<>();
-        for (Product product :
-                productsList) {
-            productResponseList.add(productMapper.toProductResponse(product));
-        }
-        return productResponseList;
+    // getting products by business id
+    public List<ProductResponse> getProductsList(Long businessId) {
+        List<Product> productsList = productRepository.getAllByOwnerId(businessId);
+
+        return productsList.stream()
+            .filter(product -> !isProductSold(product))
+            .map(productMapper::toProductResponse)
+            .collect(Collectors.toList());
     }
 
     public String deleteProduct(Long id) {
@@ -167,7 +167,7 @@ public class ProductService {
     }
 
     private boolean isProductSold(Product product) {
-        return orderRepository.getByProductId(product.getId()).isPresent();
+        return !orderRepository.getAllByProductId(product.getId()).isEmpty();
     }
 
     public List<ProductResponse> getProductsFromOderByBusinessId(Integer businessId) {
