@@ -44,7 +44,7 @@ public class ProductService {
         product.setCreationDate(LocalDateTime.now());
         log.info("Adding a new product " + product.getName());
 
-        product.setOwnerId(authService.getCurrentUser().getId());
+        product.setOwnerId(authService.getCurrentUser().getBusiness().getId());
 
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "food-care",
